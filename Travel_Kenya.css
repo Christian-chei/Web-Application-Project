@@ -1,0 +1,99 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color:peachpuff;
+    text-align: center;
+}
+h1{
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    font-size: 40px;
+    color: black;
+    margin-top: 20px;
+    text-align: center;
+}
+
+header {
+    background-color: burlywood;
+    color: black;
+    text-align: center;
+    padding: 30px;
+}
+
+nav {
+    margin: 15px 0;
+}
+
+nav select {
+    padding: 8px;
+    font-size: 16px;
+}
+
+.destination-wrapper {
+    display:grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+    padding: 20px;
+    justify-content: center;
+}
+
+.destination {
+    background-size: cover;
+    background-position: center;
+    background-color: chocolate;
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: 2px 2px 10px rgba(0,0,0,0.1);
+    text-align: center;
+    display: none;
+    position: relative;
+    overflow: hidden;
+}
+
+.destination h2 {
+    margin-bottom: 10px;
+    font-size: 30px;
+    color:black;
+    text-shadow:black 1px 1px 3px rgba(0,0,0,0.6);
+    
+}
+
+.destination p {
+    margin-bottom: 15px;
+    color: white;
+    text-shadow: 1px 1px 3px rgba(0,0,0,0.6);
+}
+
+.video-link {
+    display: inline-block;
+    padding: 8px 12px;
+    background-color: beige;
+    color: black;
+    text-decoration:none;
+    border-radius: 5px;
+}
+
+.video-link:hover {
+    background-color: burlywood;
+}
+
+footer {
+    text-align: center;
+    font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    font-size: 20px;
+    padding: 15px;
+    background-color: burlywood;
+    color: black;
+}
+
+
+#nairobi { background-image: url('Pictures/Nairobi.jpeg'); }
+#mombasa { background-image: url('Pictures/Old\ Town\ Mombasa.jpeg'); }
+#kisumu { background-image: url('Pictures/Kisumu\,\ kenia.jpeg'); }
+#nakuru { background-image: url('Pictures/download\ \(1\).jpeg'); }
+#eldoret { background-image: url('Pictures/download\ \(1\).jpg'); }
+#lamu { background-image: url('Pictures/Lamu.jpeg'); }
+#malindi { background-image: url('Pictures/Coral\ Key\ Resort_\ Malindi\,\ Kenya.jpeg'); }
+#diani { background-image: url('Pictures/Beach\ dates.jpg'); }
+#amboseli { background-image: url('Pictures/download\ \(2\).jpeg'); }
+#masai-mara { background-image: url('Pictures/balloon\ ride\ over\ the\ maasai\ mara.jpeg'); }

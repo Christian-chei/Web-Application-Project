@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Trip Planner</title>
+  <link rel="stylesheet" href="Travel_Planner-styles.css" />
+</head>
+<body>
+  <header>
+    <h1>Trip Planner</h1>
+    <nav>
+      <ul>
+        <li><a href="#itinerary">Itinerary</a></li>
+        <li><a href="#budget">Budget</a></li>
+        <li><a href="#reviews">Reviews & Vlogs</a></li>
+        <li><a href="#gallery">Gallery</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#coming-soon">Coming Soon</a></li>
+      </ul>
+    </nav>
+  </header>
+
+ 
+  <section id="hero">
+    <h2 class="Header">Explore the World with Us!</h2>
+    <p>Plan your next trip with ease and joy.</p>
+    <img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1000&q=80" alt="Travel Inspiration" class="hero-image"/>
+  </section>
+
+  
+  <section id="photos">
+    <h2>Luxury Stays</h2>
+    <div class="photo-gallery">
+      <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=800&q=80" alt="Luxury Hotel" class="hotel-photo" />
+      <img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=800&q=80" alt="Scenic Destination" class="hotel-photo" />
+      <img src="https://images.unsplash.com/photo-1519821172141-b5d8bd1b2a2a?auto=format&fit=crop&w=800&q=80" alt="Resort View" class="hotel-photo" />
+    </div>
+  </section>
+
+  <section id="itinerary">
+    <h2>Itinerary Planner</h2>
+    <form id="itinerary-form">
+      <input type="text" placeholder="Destination" required />
+      <input type="date" required />
+      <textarea placeholder="Notes"></textarea>
+      <div class="left-button">
+        <button type="submit">Add</button>
+      </div>
+    </form>
+    <ul id="itinerary-list"></ul>
+  </section>
+
+  <<section id="budget">
+    <h2>Budget Tracker & Package Suggestions</h2>
+
+    
+    <div class="budget-input-group">
+      <input id="total-budget" type="number" placeholder="Enter your total budget" />
+      <div class="left-button">
+        <button disabled>Get Package Suggestions (Coming Soon)</button>
+      </div>
+    </div>
+
+   
+    <div id="package-suggestions">
+      <p style="font-style: italic; color: #555;">Package suggestions will appear here based on your budget.</p>
+    </div>
+
+    <hr style="margin: 20px 0;">
+
+    
+    <h3>Track Your Expenses</h3>
+    <input id="expense-name" type="text" placeholder="Expense name" />
+    <input id="expense-amount" type="number" placeholder="Amount" />
+    <div class="left-button">
+      <button>Add Expense</button>
+    </div>
+
+    <ul id="expenses-list"></ul>
+  </section>
+
+
+  <section id="reviews">
+    <h2>Reviews & Vlogs</h2>
+    <form id="review-form">
+      <input type="text" placeholder="Place Name" required />
+      <textarea placeholder="Leave your review here..." required></textarea>
+      <input type="url" placeholder="Vlog URL (YouTube, etc.)" />
+      <input type="file" id="review-photo" accept="image/*" />
+      <div class="left-button">
+        <button type="submit">Post</button>
+      </div>
+    </form>
+    <div id="review-list"></div>
+  </section>
+
+  <section id="gallery">
+    <h2>Traveler Gallery</h2>
+    <div class="photo-gallery">
+      <img src="https://images.unsplash.com/photo-1543248939-ec66cb3b5c6b?auto=format&fit=crop&w=800&q=80" alt="Beach Fun" class="hotel-photo" />
+      <img src="https://images.unsplash.com/photo-1508921239999-9a2f81850c01?auto=format&fit=crop&w=800&q=80" alt="Mountain Hike" class="hotel-photo" />
+      <img src="https://images.unsplash.com/photo-1473625247510-8ceb1760943f?auto=format&fit=crop&w=800&q=80" alt="Cultural Spot" class="hotel-photo" />
+    </div>
+  </section>
+
+  <section id="about">
+    <h2>About Us</h2>
+    <p>Trip Planner is your ultimate companion for organizing dream getaways. We aim to simplify travel planning, budgeting, and sharing your experiences all in one place.</p>
+    <p>With Trip Planner, you'll never miss a detail—pack your bags, we're taking care of the rest!</p>
+  </section>
+
+  <section id="coming-soon">
+    <h2>Coming Soon</h2>
+    <ul>
+      <li>AI-powered destination recommendations</li>
+      <li>Offline trip access and export options</li>
+      <li>Community forums and travel groups</li>
+      <li>Flight and hotel integration APIs</li>
+      <li>Real-time weather updates for your travel dates</li>
+    </ul>
+  </section>
+
+  <footer>
+   
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
