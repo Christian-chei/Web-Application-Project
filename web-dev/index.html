@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Trip Planner</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    /* Modal Styles */
+.modal {
+  position: fixed;
+  z-index: 1000;
+  left: 0; top: 0;
+  width: 100vw; height: 100vh;
+  background: rgba(0,0,0,0.35);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.modal-content {
+  background: #fff;
+  padding: 2rem 2.5rem;
+  border-radius: 14px;
+  box-shadow: 0 4px 32px rgba(44,62,80,0.18);
+  min-width: 320px;
+  position: relative;
+  text-align: center;
+}
+.modal-content input {
+  width: 90%;
+  margin: 0.5em 0;
+  padding: 0.7em;
+  border-radius: 8px;
+  border: 1px solid #e5e7eb;
+  font-size: 1em;
+}
+.modal-content .btn {
+  width: 95%;
+  margin-top: 1em;
+}
+.close {
+  position: absolute;
+  right: 1.2em;
+  top: 1em;
+  font-size: 1.7em;
+  color: #aaa;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+.close:hover { color: #2d8cff; }
+
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 1.5rem;
+  margin-top: 1.5rem;
+}
+.feature-card {
+  background: #f5f8fa;
+  padding: 1.5rem;
+  border-radius: 10px;
+  text-align: center;
+  transition: transform 0.2s;
+}
+.feature-card:hover {
+  transform: translateY(-5px);
+}
+.feature-icon {
+  font-size: 2.5rem;
+  margin-bottom: 0.5rem;
+}
+.notify-btn {
+  background: #2d8cff;
+  color: #fff;
+  border: none;
+  padding: 0.7rem 1.2rem;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.notify-btn:hover {
+  background: #005bb5;
+}
+  </style>
+</head>
+<body>
+  <header class="main-header">
+    <div class="logo">Trip Planner</div>
+    <nav class="main-nav">
+      <ul>
+        <li><a href="#budget">Budget</a></li>
+        <li><a href="#reviews">Reviews</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#features">Features</a></li>
+        <li><a href="travel_kenya.html">Kenya Travel</a> <!-- Nav link to Kenya travel page -->
+      </ul>
+    </nav>
+    <div class="auth-buttons">
+      <button class="btn login" onclick="openModal('login-modal')">Login</button>
+      <button class="btn signup" onclick="openModal('signup-modal')">Sign Up</button>
+    </div>
+  </header>
+
+  <section class="hero">
+    <div class="hero-content">
+      <h1>Plan Your Perfect Getaway</h1>
+      <p>Discover, budget, and share your dream vacation</p>
+      <div class="search-bar">
+        <input type="text" placeholder="Search destination..." />
+        <button>Search</button>
+      </div>
+    </div>
+  </section>
+  <section class="budget-section">
+    <div class="budget-input" style="text-align:center; padding: 40px 20px;">
+      <h2>Plan Your Trip by Budget</h2>
+      <p>Enter your total trip budget (in USD):</p>
+      <input type="number" id="trip-budget" placeholder="e.g. 1000" style="padding:10px; font-size:1em; width:200px;">
+      <button onclick="checkBudget()" style="padding:10px 20px; font-size:1em; margin-left:10px;">Suggest Destination</button>
+
+      <div id="kenya-suggestion" style="margin-top:20px; display:none;">
+        <p>We recommend <strong>Kenya</strong>!</p>
+        <button onclick="redirectToKenya()" style="padding:10px 20px; font-size:1em;">Go to Kenya Travel Page</button>
+      </div>
+    </div>
+
+    <section id="budget">
+      <h2>Budget Tracker</h2>
+      <div class="budget-group">
+        <input id="total-budget" type="number" placeholder="Total Budget" />
+        <input id="expense-name" type="text" placeholder="Expense name" />
+        <input id="expense-amount" type="number" placeholder="Amount" />
+        <div class="left-button">
+          <button onclick="addExpense()">Add Expense</button>
+        </div>
+      </div>
+      <p id="budget-summary" style="text-align:center; font-weight: 500;">
+        Total Spent: $<span id="total-spent">0.00</span> | Remaining: $<span id="remaining-budget">0.00</span>
+      </p>
+      <ul id="expenses-list"></ul>
+    </section>
+  </section>
+
+  <script>
+    function checkBudget() {
+      const budget = parseFloat(document.getElementById('trip-budget').value);
+      const kenyaDiv = document.getElementById('kenya-suggestion');
+
+      if (isNaN(budget) || budget <= 0) {
+        alert('Please enter a valid budget amount.');
+        kenyaDiv.style.display = 'none';
+        return;
+      }
+
+      if (budget <= 1000) {
+        kenyaDiv.style.display = 'block';
+      } else {
+        alert('We are working on suggestions for higher budgets!');
+        kenyaDiv.style.display = 'none';
+      }
+    }
+
+    function redirectToKenya() {
+      window.location.href = 'Travel_Kenya.html';
+    }
+  </script>
+
+
+  <section id="reviews">
+    <h2>Reviews & Vlogs</h2>
+    <form id="review-form" class="review-form-group">
+      <input type="text" placeholder="Place Name" required />
+      <textarea placeholder="Leave your review here..." required></textarea>
+      <input type="url" placeholder="Vlog URL (YouTube, etc.)" />
+      <input type="file" id="review-photo" accept="image/*" />
+      <div class="left-button">
+        <button type="submit">Post</button>
+      </div>
+    </form>
+    <div id="review-list"></div>
+  </section>
+
+  <section id="about" class="about-section">
+    <h2>About Us</h2>
+    <p>
+      Trip Planner is your ultimate travel companion — helping you plan your journeys
+      with ease. Whether you're budgeting, reading reviews, or sharing your own adventures,
+      we're here to make travel simple, smart, and fun.
+    </p>
+  </section>
+
+  <section id="features">
+    <h2>Explore Our New Features!</h2>
+    <div class="features-grid">
+      <div class="feature-card">
+        <div class="feature-icon">📅</div>
+        <h3>Itinerary Planner</h3>
+        <p>Organize your trip day-by-day with a smart, drag-and-drop itinerary builder.</p>
+        <button class="notify-btn" onclick="openFeatureModal('itinerary')">Plan</button>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🌍</div>
+        <h3>Interactive Map of Kenya</h3>
+        <p>Explore top destinations in Kenya on an interactive map.</p>
+        <button class="notify-btn" onclick="openFeatureModal('map')">View</button>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">📸</div>
+        <h3>Image Gallery</h3>
+        <p>Share and browse travel photos, and post your adventures to inspire others.</p>
+        <button class="notify-btn" onclick="openFeatureModal('gallery')">share</button>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">📊</div>
+        <h3>Trip Analytics</h3>
+        <p>See stats about your travels: distance, budget, countries visited, and more!</p>
+        <button class="notify-btn" onclick="openFeatureModal('analytics')">analyse</button>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    &copy; Thank you , visit us again
+  </footer>
+
+  <!-- Login Modal -->
+<div id="login-modal" class="modal" style="display:none;">
+  <div class="modal-content">
+    <span class="close" onclick="closeModal('login-modal')">&times;</span>
+    <h2>Login</h2>
+    <form id="login-form">
+      <input type="text" placeholder="Username" required /><br />
+      <input type="password" placeholder="Password" required /><br />
+      <button type="submit" class="btn login">Login</button>
+    </form>
+    <p style="font-size:0.95em; margin-top:1em;">Don't have an account? <a href="#" onclick="switchModal('login-modal','signup-modal')">Sign Up</a></p>
+  </div>
+</div>
+
+<!-- Sign Up Modal -->
+<div id="signup-modal" class="modal" style="display:none;">
+  <div class="modal-content">
+    <span class="close" onclick="closeModal('signup-modal')">&times;</span>
+    <h2>Sign Up</h2>
+    <form id="signup-form">
+      <input type="text" placeholder="Username" required /><br />
+      <input type="email" placeholder="Email" required /><br />
+      <input type="password" placeholder="Password" required /><br />
+      <button type="submit" class="btn signup">Sign Up</button>
+    </form>
+    <p style="font-size:0.95em; margin-top:1em;">Already have an account? <a href="#" onclick="switchModal('signup-modal','login-modal')">Login</a></p>
+  </div>
+</div>
+
+<!-- Notify Me Modal -->
+<div id="notify-modal" class="modal" style="display:none;">
+  <div class="modal-content">
+    <span class="close" onclick="closeModal('notify-modal')">&times;</span>
+    <h2 id="notify-feature-title">Get Notified!</h2>
+    <form id="notify-form">
+      <input type="email" id="notify-email" placeholder="Your email" required />
+      <button type="submit" class="btn signup">Notify Me</button>
+    </form>
+    <p id="notify-success" style="display:none; color:var(--primary); margin-top:1em;">Thank you! We'll let you know when it's ready.</p>
+  </div>
+</div>
+
+<!-- Feature Modals -->
+<div id="feature-modal" class="modal" style="display:none;">
+  <div class="modal-content" style="max-width:420px;">
+    <span class="close" onclick="closeModal('feature-modal')">&times;</span>
+    <div id="feature-modal-content"></div>
+  </div>
+</div>
+
+<!-- Budget Options Modal -->
+<div id="budget-options-modal" class="modal" style="display:none;">
+  <div class="modal-content" style="max-width:400px;">
+    <span class="close" onclick="closeModal('budget-options-modal')">&times;</span>
+    <h2 id="budget-location-title">Budget Options</h2>
+    <div id="budget-options-content"></div>
+  </div>
+</div>
+  <script>
+    let totalSpent = 0;
+
+    function updateBudgetSummary() {
+      const totalBudget = Number(document.getElementById('total-budget').value) || 0;
+      document.getElementById('total-spent').textContent = totalSpent.toFixed(2);
+      document.getElementById('remaining-budget').textContent = (totalBudget - totalSpent).toFixed(2);
+    }
+
+    function addExpense() {
+      const name = document.getElementById('expense-name').value.trim();
+      const amount = Number(document.getElementById('expense-amount').value);
+      const list = document.getElementById('expenses-list');
+
+      if (!name || !amount) return alert('Enter valid expense name and amount.');
+
+      const li = document.createElement('li');
+      li.textContent = `${name}: $${amount.toFixed(2)}`;
+
+      // Add remove button
+      const removeBtn = document.createElement('button');
+      removeBtn.textContent = 'Remove';
+      removeBtn.style.marginLeft = '1rem';
+      removeBtn.onclick = function() {
+        totalSpent -= amount;
+        list.removeChild(li);
+        updateBudgetSummary();
+      };
+      li.appendChild(removeBtn);
+
+      list.appendChild(li);
+
+      totalSpent += amount;
+      updateBudgetSummary();
+
+      // Clear inputs
+      document.getElementById('expense-name').value = '';
+      document.getElementById('expense-amount').value = '';
+    }
+
+    document.getElementById('total-budget').addEventListener('input', updateBudgetSummary);
+
+    // Review form interactivity
+    document.getElementById('review-form').onsubmit = function(e) {
+      e.preventDefault();
+      const [placeInput, reviewInput, vlogInput] = this.querySelectorAll('input, textarea');
+      const photoInput = document.getElementById('review-photo');
+      const reviewList = document.getElementById('review-list');
+
+      const place = placeInput.value.trim();
+      const review = reviewInput.value.trim();
+      const vlog = vlogInput.value.trim();
+      const photo = photoInput.files[0];
+
+      if (!place || !review) return alert('Please fill in the place and review.');
+
+      const div = document.createElement('div');
+      div.style.marginBottom = '1.2rem';
+      div.style.padding = '1rem';
+      div.style.background = '#f5f8fa';
+      div.style.borderRadius = '10px';
+
+      div.innerHTML = `<strong>${place}</strong><br>${review.replace(/\n/g, '<br>')}`;
+
+      if (vlog) {
+        div.innerHTML += `<br><a href="${vlog}" target="_blank" style="color:#2d8cff;">Watch Vlog</a>`;
+      }
+
+      if (photo) {
+        const img = document.createElement('img');
+        img.style.maxWidth = '120px';
+        img.style.display = 'block';
+        img.style.marginTop = '0.7rem';
+        img.style.borderRadius = '8px';
+        img.src = URL.createObjectURL(photo);
+        div.appendChild(img);
+      }
+
+      reviewList.prepend(div);
+
+      // Reset form
+      this.reset();
+    };
+
+    // Modal logic
+function openModal(id) {
+  document.getElementById(id).style.display = 'flex';
+}
+function closeModal(id) {
+  document.getElementById(id).style.display = 'none';
+}
+function switchModal(closeId, openId) {
+  closeModal(closeId);
+  openModal(openId);
+}
+
+// Show modals on button click
+document.querySelector('.btn.login').onclick = function() { openModal('login-modal'); };
+document.querySelector('.btn.signup').onclick = function() { openModal('signup-modal'); };
+
+// Optional: Close modal when clicking outside content
+window.onclick = function(event) {
+  ['login-modal','signup-modal'].forEach(function(id){
+    const modal = document.getElementById(id);
+    if (event.target === modal) modal.style.display = 'none';
+  });
+};
+
+// Dummy form handlers (replace with real auth if needed)
+document.getElementById('login-form').onsubmit = function(e) {
+  e.preventDefault();
+  alert('Logged in! (Demo)');
+  closeModal('login-modal');
+};
+document.getElementById('signup-form').onsubmit = function(e) {
+  e.preventDefault();
+  alert('Signed up! (Demo)');
+  closeModal('signup-modal');
+};
+
+// Notify Me modal logic
+function openNotifyModal(feature) {
+  document.getElementById('notify-modal').style.display = 'flex';
+  document.getElementById('notify-feature-title').textContent = `Get Notified about "${feature}"!`;
+  document.getElementById('notify-success').style.display = 'none';
+  document.getElementById('notify-form').style.display = '';
+  document.getElementById('notify-email').value = '';
+}
+
+document.getElementById('notify-form').onsubmit = function(e) {
+  e.preventDefault();
+  document.getElementById('notify-form').style.display = 'none';
+  document.getElementById('notify-success').style.display = '';
+};
+
+// Feature modal logic
+function openFeatureModal(feature) {
+  const content = document.getElementById('feature-modal-content');
+  if (feature === 'itinerary') {
+    content.innerHTML = `
+      <h2>Itinerary Planner (Demo)</h2>
+      <p>Add your trip days and activities:</p>
+      <ul id="itinerary-list" style="text-align:left; padding-left:1.2em;"></ul>
+      <input id="itinerary-day" type="text" placeholder="Day & Activity" style="width:90%;margin-top:0.5em;" />
+      <button class="btn signup" style="margin-top:0.5em;" onclick="addItinerary()">Add</button>
+    `;
+    window.itineraryItems = [];
+    renderItinerary();
+  } else if (feature === 'map') {
+    content.innerHTML = `
+      <h2>Interactive Map of Kenya (Demo)</h2>
+      <div style="position:relative;max-width:320px;margin:auto;">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/4/49/Kenya_location_map_Topographic.png" alt="Kenya Map" style="width:100%;border-radius:8px;">
+        <button title="Nairobi" style="position:absolute;left:54%;top:44%;transform:translate(-50%,-50%);background:#2d8cff;color:#fff;border:none;border-radius:50%;width:32px;height:32px;cursor:pointer;font-size:1.1em;box-shadow:0 2px 8px #0002;" onclick="window.open('https://www.youtube.com/watch?v=Qw1r1C2Tn6A','_blank')">N</button>
+        <button title="Mombasa" style="position:absolute;left:80%;top:82%;transform:translate(-50%,-50%);background:#ffb347;color:#222;border:none;border-radius:50%;width:32px;height:32px;cursor:pointer;font-size:1.1em;box-shadow:0 2px 8px #0002;" onclick="window.open('https://www.youtube.com/watch?v=2QdQ2K2Tn6B','_blank')">M</button>
+        <button title="Maasai Mara" style="position:absolute;left:18%;top:70%;transform:translate(-50%,-50%);background:#4caf50;color:#fff;border:none;border-radius:50%;width:32px;height:32px;cursor:pointer;font-size:1.1em;box-shadow:0 2px 8px #0002;" onclick="window.open('https://www.youtube.com/watch?v=3EdQ3C3Tn6C','_blank')">MM</button>
+      </div>
+      <div style="margin-top:1em;font-size:0.98em;color:#555;">
+        <b>Click a marker:</b> N = Nairobi, M = Mombasa, MM = Maasai Mara
+      </div>
+    `;
+  } else if (feature === 'gallery') {
+    content.innerHTML = `
+      <h2>Image Gallery (Demo)</h2>
+      <input type="file" id="gallery-upload" accept="image/*" style="margin-bottom:0.7em;" />
+      <div id="gallery-preview" style="display:flex;gap:0.5em;flex-wrap:wrap;"></div>
+    `;
+    document.getElementById('gallery-upload').onchange = function(e) {
+      const preview = document.getElementById('gallery-preview');
+      preview.innerHTML = '';
+      Array.from(e.target.files).forEach(file => {
+        const img = document.createElement('img');
+        img.src = URL.createObjectURL(file);
+        img.style.width = '80px';
+        img.style.borderRadius = '6px';
+        img.style.marginBottom = '0.5em';
+        preview.appendChild(img);
+      });
+    };
+  } else if (feature === 'analytics') {
+    content.innerHTML = `
+      <h2>Trip Analytics (Demo)</h2>
+      <p>Trips: <strong>5</strong></p>
+      <p>Countries Visited: <strong>3</strong></p>
+      <p>Total Distance: <strong>8,200 km</strong></p>
+      <div style="background:#e3f0ff;border-radius:8px;padding:1em;margin-top:1em;">
+        <strong>Budget Used:</strong>
+        <div style="background:#2d8cff;height:16px;width:70%;border-radius:8px;margin-top:0.3em;"></div>
+      </div>
+    `;
+  }
+  openModal('feature-modal');
+}
+
+// Itinerary planner demo logic
+function addItinerary() {
+  const input = document.getElementById('itinerary-day');
+  if (!input.value.trim()) return;
+  window.itineraryItems.push(input.value.trim());
+  input.value = '';
+  renderItinerary();
+}
+function renderItinerary() {
+  const list = document.getElementById('itinerary-list');
+  if (!list) return;
+  list.innerHTML = '';
+  window.itineraryItems.forEach((item, i) => {
+    const li = document.createElement('li');
+    li.textContent = item;
+    li.style.marginBottom = '0.3em';
+    li.onclick = () => {
+      window.itineraryItems.splice(i,1);
+      renderItinerary();
+    };
+    list.appendChild(li);
+  });
+}
+
+// Kenyan locations supported (add more as needed)
+const kenyaLocations = [
+  { name: "nairobi", label: "Nairobi", marker: "N" },
+  { name: "mombasa", label: "Mombasa", marker: "M" },
+  { name: "maasai mara", label: "Maasai Mara", marker: "MM" },
+  { name: "masai mara", label: "Maasai Mara", marker: "MM" }
+];
+
+// Budget options for each location
+const budgetOptions = {
+  "N": [
+    { type: "Budget", cost: "$30/day", desc: "Hostels, street food, public transport." },
+    { type: "Mid-range", cost: "$80/day", desc: "3-star hotels, restaurants, taxis." },
+    { type: "Luxury", cost: "$200+/day", desc: "5-star hotels, fine dining, private tours." }
+  ],
+  "M": [
+    { type: "Budget", cost: "$35/day", desc: "Guesthouses, local eateries, matatus." },
+    { type: "Mid-range", cost: "$90/day", desc: "Beach hotels, seafood, taxis." },
+    { type: "Luxury", cost: "$220+/day", desc: "Resorts, gourmet dining, private beach access." }
+  ],
+  "MM": [
+    { type: "Budget", cost: "$60/day", desc: "Camping, group safaris, simple meals." },
+    { type: "Mid-range", cost: "$150/day", desc: "Lodge stays, guided tours, buffet meals." },
+    { type: "Luxury", cost: "$400+/day", desc: "Luxury camps, private safaris, all-inclusive." }
+  ]
+};
+
+// Show budget options modal
+function showBudgetOptions(marker, label) {
+  document.getElementById('budget-location-title').textContent = `${label} Budget Options`;
+  const options = budgetOptions[marker] || [];
+  document.getElementById('budget-options-content').innerHTML = options.map(opt => `
+    <div style="margin-bottom:1em;padding:1em;background:#f5f8fa;border-radius:8px;">
+      <strong>${opt.type}</strong><br>
+      <span style="color:#2d8cff;font-weight:600;">${opt.cost}</span><br>
+      <span style="font-size:0.97em;">${opt.desc}</span>
+    </div>
+  `).join('');
+  openModal('budget-options-modal');
+}
+
+document.querySelector('.search-bar button').onclick = function() {
+  const input = document.querySelector('.search-bar input');
+  const query = input.value.trim().toLowerCase();
+  const content = document.getElementById('feature-modal-content');
+
+  if (!query) return;
+
+  if (query === 'kenya') {
+    content.innerHTML = `
+      <h2>Destination Found</h2>
+      <p>We recommend exploring <strong>Kenya</strong>!</p>
+      <button onclick="window.location.href='Travel_Kenya.html'" class="btn signup" style="margin-top:1em;">Go to Kenya Travel Page</button>
+    `;
+    openModal('feature-modal');
+  } else {
+    // Fallback to existing Kenya sub-location logic
+    const found = kenyaLocations.find(loc => query === loc.name || query.includes(loc.name));
+    if (found) {
+      openFeatureModal('map');
+      setTimeout(function(){
+        highlightMapMarker(found.marker);
+        showBudgetOptions(found.marker, found.label);
+      }, 400);
+    } else {
+      content.innerHTML = `
+        <h2>Location Unavailable</h2>
+        <p>Sorry, this location is unavailable at the moment. Please try a destination in Kenya!</p>
+      `;
+      openModal('feature-modal');
+    }
+  }
+};
+
+
+// Optional: highlight marker on map after search
+function highlightMapMarker(marker) {
+  const mapModal = document.getElementById('feature-modal-content');
+  if (!mapModal) return;
+  setTimeout(() => {
+    const markerBtn = Array.from(mapModal.querySelectorAll('button')).find(btn => btn.textContent === marker);
+    if (markerBtn) {
+      markerBtn.focus();
+      markerBtn.style.boxShadow = "0 0 0 4px #ffb34788";
+      setTimeout(() => { markerBtn.style.boxShadow = ""; }, 1500);
+    }
+  }, 300);
+}
+  </script>
+  <script src="auth.js"></script>
+
+</body>
+
+</html>
